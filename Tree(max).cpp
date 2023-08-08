@@ -13,7 +13,7 @@ void build(int v, int tl, int tr) {
 	if (tl >= tr)
 		return;
 	if (tl + 1 == tr) {
-		tree[v] = { a[tl], tl };
+		tree[v] = { a[tl], tl + 1};
 		return;
 	}
 	int tm = (tl + tr) / 2;
@@ -38,11 +38,11 @@ void update(int v, int tl, int tr, int pos, int new_elem) {
 	tree[v] = max(tree[v * 2], tree[v * 2 + 1]);
 }
 
-int find(int v, int tl, int tr, int left, int right) {
+pii find(int v, int tl, int tr, int left, int right) {
 	if (tl >= tr || left >= right)
-		return -mod;
+		return { -mod, -mod };
 	if (left <= tl && tr <= right) {
-		return tree[v].first;
+		return tree[v];
 	}
 	int tm = (tl + tr) / 2;
 	return max(find(v * 2, tl, tm, left, min(tm, right)), find(v * 2 + 1, tm, tr, max(tm, left), right));
@@ -61,7 +61,7 @@ int main() {
 	for (int i = 0; i < k; i++) {
 		int l, r;
 		cin >> l >> r;
-		cout << find(1, 0, n, l - 1, r)<< "\n";
+		cout << find(1, 0, n, l - 1, r).second << "\n";
 	}
 }
 /*
