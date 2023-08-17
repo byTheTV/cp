@@ -14,36 +14,35 @@ const ll mod = 1e10 + 7;
 const int N = 1e4 + 10;
 
 
-
 void solve() {
     ll n, k;
     cin >> n >> k;
     string s;
     cin >> s;
-    vector<vector<int>> pref(n + 1, vector<int>(n + 1));
-    vector<vector<int>> suf(n + 1, vector<int>(n + 1));
+    vector<ll> segments(n + 1, -1e9);
+    vector<vector<ll>> pref(n + 1, vector<ll>(n + 1));
+    vector<vector<ll>> suf(n + 1, vector<ll>(n + 1));
 
-    for (int l = 0; l < n; l++) {
+    for (ll l = 0; l < n; l++) {
 	ll cnt = 0;
-	for (int r = l + 1; r <= n; r++) {
-	    if (s[r - 1] == '1')
-		cnt++;
+	for (ll r = l + 1; r <= n; r++) {
+	    cnt += s[r - 1] == '1';
 	    pref[r][cnt] = max(pref[r][cnt], r - l);
 	    suf[l][cnt] = max(suf[l][cnt], r - l);
 	}
     }
 
-    for (int l = 0; l <= n; l++) {
-	for (int cnt = 0; cnt <= n; cnt++) {
-	    if (l)
-		pref[l][cnt] = max(pref[l][cnt], pref[l - 1][cnt]);
+    for (ll r = 0; r <= n; r++) {
+	for (ll cnt = 0; cnt <= n; cnt++) {
+	    if (r)
+		pref[r][cnt] = max(pref[r][cnt], pref[r - 1][cnt]);
 	    if (cnt)
-		pref[l][cnt] = max(pref[l][cnt], pref[l][cnt - 1]);
+		pref[r][cnt] = max(pref[r][cnt], pref[r][cnt - 1]);
 	}
     }
 
-    for (int l = n; l >= 0; l--) {
-	for (int cnt = 0; cnt <= n; cnt++) {
+    for (ll l = n; l >= 0; l--) {
+	for (ll cnt = 0; cnt <= n; cnt++) {
 	    if (l + 1 <= n)
 		suf[l][cnt] = max(suf[l][cnt], suf[l + 1][cnt]);
 	    if (cnt)
@@ -51,11 +50,11 @@ void solve() {
 	}
     }
 
-    vector<int> segments(n + 1);
-    for (int l = 0; l < n; l++) {
-	int cnt = 0;
-	for (int r = l; r <= n; r++) {
-	    if(r > l)
+
+    for (ll l = 0; l < n; l++) {
+	ll cnt = 0;
+	for (ll r = l; r <= n; r++) {
+	    if (r > l)
 		cnt += s[r - 1] == '0';
 	    if (cnt > k)
 		break;
@@ -64,10 +63,10 @@ void solve() {
 	}
     }
 
-    for (int i = 1; i <= n; i++) {
-	int mx = 0;
-	for (int a = 0; a <= n; a++) {
-//	    cout << segments[a] * i + a << " ";
+    for (ll i = 1; i <= n; i++) {
+	ll mx = 0;
+	for (ll a = 0; a <= n; a++) {
+	    //	    cout << segments[a] * i + a << " ";
 	    mx = max(segments[a] * i + a, mx);
 	}
 	cout << mx << " ";
@@ -76,12 +75,10 @@ void solve() {
 
 }
 
-
-
 /*
 1
-4 1
-0110
+1 0
+0
 
 
 
