@@ -1,14 +1,9 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <set>
-#include <cmath>
-#include <algorithm>
+#include <queue>
 #include <map>
-#include <stack>
-#include <unordered_map>
-#include <bitset>
-#include <random>
-#include <unordered_set>
 using namespace std;
 
 vector<vector<int>> a, t;
@@ -20,7 +15,7 @@ bool cycle = 0;
 
 void dfs1(int v) {
     used[v] = 1;
-    for (int u : a[v]) {
+    for (int u : t[v]) {
         if (used[u] == 0)
             dfs1(u);
         if (used[u] == 1) {
@@ -33,18 +28,31 @@ void dfs1(int v) {
 
 void dfs2(int v) {
     cmp[v] = sum;
-    for (int u : t[v])
+    for (int u : a[v])
         if (cmp[u] == 0)
             dfs2(u);
 }
 
 
 /*
-3 0
-1 2
-2 3
-3 1
-
+12 16
+1 8
+8 7
+7 2
+7 1
+2 10
+10 5
+5 3
+12 3
+3 10
+12 10
+3 11
+12 6
+11 9
+9 6
+4 9
+6 4
+6 11
 */
 
 void solve() {
@@ -61,6 +69,9 @@ void solve() {
         x--, y--;
         a[x].push_back(y);
     }
+    for (int v = 0; v < n; v++)
+        for (int u : a[v])
+            t[u].push_back(v);
 
     for (int i = 0; i < n; i++)
         if (used[i] == 0)
@@ -68,9 +79,9 @@ void solve() {
 
     reverse(order.begin(), order.end());
 
-    for (int v = 0; v < n; v++)
-        for (int u : a[v])
-            t[u].push_back(v);
+    //for (auto i : order)
+    //    cout << i << " ";
+    //cout << "\n";
 
     for (int v : order)
         if (cmp[v] == 0)
@@ -84,4 +95,3 @@ void solve() {
 int main() {
     solve();
 }
-
