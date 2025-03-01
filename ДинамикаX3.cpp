@@ -1,5 +1,4 @@
-// ConsoleApplication20.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+
 #include <algorithm>
 #include <iostream>
 #include <vector>
