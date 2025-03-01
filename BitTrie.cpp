@@ -50,7 +50,7 @@ bool finds(node* v, string s) {
 		return true;
 	return false;
 }
-
+//
 string tobits(int num) {
 	string s = "";
 	int i = 0;
