@@ -17,7 +17,7 @@ const int N = 2e5 + 10;
 
 ll n;
 string s;
-
+//
 
 
 long long f(long long x, long long n, ll p) {
