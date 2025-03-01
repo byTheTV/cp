@@ -13,7 +13,7 @@
 using namespace std;
 const ll mod = 1e10 + 7;
 const int N = 1e4 + 10;
-
+//
 int n;
 
 int func(vector<int> a) {
